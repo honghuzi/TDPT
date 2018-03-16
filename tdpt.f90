@@ -46,7 +46,6 @@ program main
   ! f2 = cos2field(ItoE0(1.0d15)/2, 1.92, 0.0, 500.0, 500.0)
   dt = 0.05
   nt = int((max(f1%tau + f1%tm, f2%tau + f2%tm)+0d0)/dt)
-  ! nt = int((f1%tau/2 + f1%tm)/dt)
 
   allocate (t(nt), ele(nt))
   allocate (Kas(nt-1), Kbs(nt-1))
@@ -110,7 +109,7 @@ program main
         !      + sqrt(sigmas(3)*sigmas(4)/(Eb - Ei)/(Ef - Eb))*Kb)**2
 
         spectrum(iE1, iE2) = abs(sqrt(sigmas(1)*sigmas(2)/(Ea - Ei)/(Ef - Ea))*Ka &
-        + sqrt(sigmas(3)*sigmas(4)/(Eb - Ei)/(Ef - Eb))*Kb)**2
+             + sqrt(sigmas(3)*sigmas(4)/(Eb - Ei)/(Ef - Eb))*Kb)**2
 
         spectrum(iE2, iE1) = spectrum(iE1, iE2)
         ! Ex(nE*(iE2 - 1) + iE1) = (iE1 - nE/2)*dE
@@ -124,7 +123,7 @@ program main
      end do
 
      if (mod(iE2, 20) == 0) then
-     print *, "iE2=", iE2
+        print *, "iE2=", iE2
      end if
   end do
   Ex = Ex * transE
@@ -133,7 +132,7 @@ program main
   open (100, file='data/je.bin', access='stream')
   write (100) ((Ex(nE*(j - 1) + i), Ey(nE*(i - 1) + j), spectrum(i, j), i=1, nE), j=1, nE)
   close (100)
-  ! print *, "spectrum=", spectrum
+
   call time(nowtime)
   print'("time is:", T20, A)', nowtime
   deallocate (t, ele)

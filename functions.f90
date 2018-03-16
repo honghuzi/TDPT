@@ -6,9 +6,9 @@ module Functions
 
 contains
 
-  function sigma(E, paras)! sigma0, E0, yw, ya, P, y0, y1)
-    real(DOUBLE), intent(in) :: E!, sigma0, E0, yw, ya, P, y0, y1
-    real(DOUBLE), dimension(7), intent(in) :: paras!, sigma0, E0, yw, ya, P, y0, y1
+  function sigma(E, paras)
+    real(DOUBLE), intent(in) :: E
+    real(DOUBLE), dimension(7), intent(in) :: paras
     real(DOUBLE) :: sigma, E0, sigma0,  ya, P, yw, y0, y1
     real(DOUBLE) :: x, y, F
     E0 = paras(1)

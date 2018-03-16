@@ -100,8 +100,6 @@ contains
     do i = 1, size(x)
        xsav = x(i)
        h(i) = qromb(g, 0d0, xsav, w1, w2, f1, f2)
-       ! h(i) = qromb(g, 0d0, maxval(x), w1, w2, f1, f2)
-       ! h(i) = qromb(g, -sqrt(100**2 - xsav**2), sqrt(100**2-xsav**2), w1, w2, f1, f2)
     end do
   end function h
   function g(y, w1, w2, f1, f2)
@@ -114,7 +112,6 @@ contains
 
   recursive function qromb(func, a, b, w1, w2, f1, f2)
     use nrtype; use nrutil, only:nrerror
-    ! use nr, only:polint
     implicit none
     real(DOUBLE), intent(in) :: a, b, w1, w2
     type(cos2field), intent(in) :: f1, f2

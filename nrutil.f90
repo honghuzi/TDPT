@@ -78,7 +78,7 @@ contains
     n_not_copied=size(src)-n_copied
     dest(1:n_copied)=src(1:n_copied)
   end subroutine array_copy_r
- !bl
+  !bl
   subroutine array_copy_d(src,dest,n_copied,n_not_copied)
     real(dp), dimension(:), intent(in) :: src
     real(dp), dimension(:), intent(out) :: dest
@@ -87,7 +87,7 @@ contains
     n_not_copied=size(src)-n_copied
     dest(1:n_copied)=src(1:n_copied)
   end subroutine array_copy_d
- !bl
+  !bl
   subroutine array_copy_i(src,dest,n_copied,n_not_copied)
     integer(i4b), dimension(:), intent(in) :: src
     integer(i4b), dimension(:), intent(out) :: dest
@@ -96,8 +96,8 @@ contains
     n_not_copied=size(src)-n_copied
     dest(1:n_copied)=src(1:n_copied)
   end subroutine array_copy_i
- !bl
- !bl
+  !bl
+  !bl
   subroutine swap_i(a,b)
     integer(i4b), intent(inout) :: a,b
     integer(i4b) :: dum
@@ -105,7 +105,7 @@ contains
     a=b
     b=dum
   end subroutine swap_i
- !bl
+  !bl
   subroutine swap_r(a,b)
     real(sp), intent(inout) :: a,b
     real(sp) :: dum
@@ -113,7 +113,7 @@ contains
     a=b
     b=dum
   end subroutine swap_r
- !bl
+  !bl
   subroutine swap_rv(a,b)
     real(sp), dimension(:), intent(inout) :: a,b
     real(sp), dimension(size(a)) :: dum
@@ -121,7 +121,7 @@ contains
     a=b
     b=dum
   end subroutine swap_rv
- !bl
+  !bl
   subroutine swap_c(a,b)
     complex(spc), intent(inout) :: a,b
     complex(spc) :: dum
@@ -129,7 +129,7 @@ contains
     a=b
     b=dum
   end subroutine swap_c
- !bl
+  !bl
   subroutine swap_cv(a,b)
     complex(spc), dimension(:), intent(inout) :: a,b
     complex(spc), dimension(size(a)) :: dum
@@ -137,7 +137,7 @@ contains
     a=b
     b=dum
   end subroutine swap_cv
- !bl
+  !bl
   subroutine swap_cm(a,b)
     complex(spc), dimension(:,:), intent(inout) :: a,b
     complex(spc), dimension(size(a,1),size(a,2)) :: dum
@@ -145,7 +145,7 @@ contains
     a=b
     b=dum
   end subroutine swap_cm
- !bl
+  !bl
   subroutine swap_z(a,b)
     complex(dpc), intent(inout) :: a,b
     complex(dpc) :: dum
@@ -153,7 +153,7 @@ contains
     a=b
     b=dum
   end subroutine swap_z
- !bl
+  !bl
   subroutine swap_zv(a,b)
     complex(dpc), dimension(:), intent(inout) :: a,b
     complex(dpc), dimension(size(a)) :: dum
@@ -161,7 +161,7 @@ contains
     a=b
     b=dum
   end subroutine swap_zv
- !bl
+  !bl
   subroutine swap_zm(a,b)
     complex(dpc), dimension(:,:), intent(inout) :: a,b
     complex(dpc), dimension(size(a,1),size(a,2)) :: dum
@@ -169,7 +169,7 @@ contains
     a=b
     b=dum
   end subroutine swap_zm
- !bl
+  !bl
   subroutine masked_swap_rs(a,b,mask)
     real(sp), intent(inout) :: a,b
     logical(lgt), intent(in) :: mask
@@ -180,7 +180,7 @@ contains
        b=swp
     end if
   end subroutine masked_swap_rs
- !bl
+  !bl
   subroutine masked_swap_rv(a,b,mask)
     real(sp), dimension(:), intent(inout) :: a,b
     logical(lgt), dimension(:), intent(in) :: mask
@@ -191,7 +191,7 @@ contains
        b=swp
     end where
   end subroutine masked_swap_rv
- !bl
+  !bl
   subroutine masked_swap_rm(a,b,mask)
     real(sp), dimension(:,:), intent(inout) :: a,b
     logical(lgt), dimension(:,:), intent(in) :: mask
@@ -202,8 +202,8 @@ contains
        b=swp
     end where
   end subroutine masked_swap_rm
- !bl
- !bl
+  !bl
+  !bl
   function reallocate_rv(p,n)
     real(sp), dimension(:), pointer :: p, reallocate_rv
     integer(i4b), intent(in) :: n
@@ -216,7 +216,7 @@ contains
     reallocate_rv(1:min(nold,n))=p(1:min(nold,n))
     deallocate(p)
   end function reallocate_rv
- !bl
+  !bl
   function reallocate_iv(p,n)
     integer(i4b), dimension(:), pointer :: p, reallocate_iv
     integer(i4b), intent(in) :: n
@@ -229,7 +229,7 @@ contains
     reallocate_iv(1:min(nold,n))=p(1:min(nold,n))
     deallocate(p)
   end function reallocate_iv
- !bl
+  !bl
   function reallocate_hv(p,n)
     character(1), dimension(:), pointer :: p, reallocate_hv
     integer(i4b), intent(in) :: n
@@ -242,7 +242,7 @@ contains
     reallocate_hv(1:min(nold,n))=p(1:min(nold,n))
     deallocate(p)
   end function reallocate_hv
- !bl
+  !bl
   function reallocate_rm(p,n,m)
     real(sp), dimension(:,:), pointer :: p, reallocate_rm
     integer(i4b), intent(in) :: n,m
@@ -257,7 +257,7 @@ contains
          p(1:min(nold,n),1:min(mold,m))
     deallocate(p)
   end function reallocate_rm
- !bl
+  !bl
   function reallocate_im(p,n,m)
     integer(i4b), dimension(:,:), pointer :: p, reallocate_im
     integer(i4b), intent(in) :: n,m
@@ -272,7 +272,7 @@ contains
          p(1:min(nold,n),1:min(mold,m))
     deallocate(p)
   end function reallocate_im
- !bl
+  !bl
   function ifirstloc(mask)
     logical(lgt), dimension(:), intent(in) :: mask
     integer(i4b) :: ifirstloc
@@ -281,7 +281,7 @@ contains
     ifirstloc=loc(1)
     if (.not. mask(ifirstloc)) ifirstloc=size(mask)+1
   end function ifirstloc
- !bl
+  !bl
   function imaxloc_r(arr)
     real(sp), dimension(:), intent(in) :: arr
     integer(i4b) :: imaxloc_r
@@ -289,7 +289,7 @@ contains
     imax=maxloc(arr(:))
     imaxloc_r=imax(1)
   end function imaxloc_r
- !bl
+  !bl
   function imaxloc_i(iarr)
     integer(i4b), dimension(:), intent(in) :: iarr
     integer(i4b), dimension(1) :: imax
@@ -297,7 +297,7 @@ contains
     imax=maxloc(iarr(:))
     imaxloc_i=imax(1)
   end function imaxloc_i
- !bl
+  !bl
   function iminloc(arr)
     real(dp), dimension(:), intent(in) :: arr
     integer(i4b), dimension(1) :: imin
@@ -305,7 +305,7 @@ contains
     imin=minloc(arr(:))
     iminloc=imin(1)
   end function iminloc
- !bl
+  !bl
   subroutine assert1(n1,string)
     character(len=*), intent(in) :: string
     logical, intent(in) :: n1
@@ -315,7 +315,7 @@ contains
        stop 'program terminated by assert1'
     end if
   end subroutine assert1
- !bl
+  !bl
   subroutine assert2(n1,n2,string)
     character(len=*), intent(in) :: string
     logical, intent(in) :: n1,n2
@@ -325,7 +325,7 @@ contains
        stop 'program terminated by assert2'
     end if
   end subroutine assert2
- !bl
+  !bl
   subroutine assert3(n1,n2,n3,string)
     character(len=*), intent(in) :: string
     logical, intent(in) :: n1,n2,n3
@@ -335,7 +335,7 @@ contains
        stop 'program terminated by assert3'
     end if
   end subroutine assert3
- !bl
+  !bl
   subroutine assert4(n1,n2,n3,n4,string)
     character(len=*), intent(in) :: string
     logical, intent(in) :: n1,n2,n3,n4
@@ -345,7 +345,7 @@ contains
        stop 'program terminated by assert4'
     end if
   end subroutine assert4
- !bl
+  !bl
   subroutine assert_v(n,string)
     character(len=*), intent(in) :: string
     logical, dimension(:), intent(in) :: n
@@ -355,7 +355,7 @@ contains
        stop 'program terminated by assert_v'
     end if
   end subroutine assert_v
- !bl
+  !bl
   function assert_eq2(n1,n2,string)
     character(len=*), intent(in) :: string
     integer, intent(in) :: n1,n2
@@ -368,7 +368,7 @@ contains
        stop 'program terminated by assert_eq2'
     end if
   end function assert_eq2
- !bl
+  !bl
   function assert_eq3(n1,n2,n3,string)
     character(len=*), intent(in) :: string
     integer, intent(in) :: n1,n2,n3
@@ -381,7 +381,7 @@ contains
        stop 'program terminated by assert_eq3'
     end if
   end function assert_eq3
- !bl
+  !bl
   function assert_eq4(n1,n2,n3,n4,string)
     character(len=*), intent(in) :: string
     integer, intent(in) :: n1,n2,n3,n4
@@ -394,7 +394,7 @@ contains
        stop 'program terminated by assert_eq4'
     end if
   end function assert_eq4
- !bl
+  !bl
   function assert_eqn(nn,string)
     character(len=*), intent(in) :: string
     integer, dimension(:), intent(in) :: nn
@@ -407,13 +407,13 @@ contains
        stop 'program terminated by assert_eqn'
     end if
   end function assert_eqn
- !bl
+  !bl
   subroutine nrerror(string)
     character(len=*), intent(in) :: string
     write (*,*) 'nrerror: ',string
     stop 'program terminated by nrerror'
   end subroutine nrerror
- !bl
+  !bl
   function arth_r(first,increment,n)
     real(sp), intent(in) :: first,increment
     integer(i4b), intent(in) :: n
@@ -440,7 +440,7 @@ contains
        end do
     end if
   end function arth_r
- !bl
+  !bl
   function arth_d(first,increment,n)
     real(dp), intent(in) :: first,increment
     integer(i4b), intent(in) :: n
@@ -467,7 +467,7 @@ contains
        end do
     end if
   end function arth_d
- !bl
+  !bl
   function arth_i(first,increment,n)
     integer(i4b), intent(in) :: first,increment,n
     integer(i4b), dimension(n) :: arth_i
@@ -492,8 +492,8 @@ contains
        end do
     end if
   end function arth_i
- !bl
- !bl
+  !bl
+  !bl
   function geop_r(first,factor,n)
     real(sp), intent(in) :: first,factor
     integer(i4b), intent(in) :: n
@@ -520,7 +520,7 @@ contains
        end do
     end if
   end function geop_r
- !bl
+  !bl
   function geop_d(first,factor,n)
     real(dp), intent(in) :: first,factor
     integer(i4b), intent(in) :: n
@@ -547,7 +547,7 @@ contains
        end do
     end if
   end function geop_d
- !bl
+  !bl
   function geop_i(first,factor,n)
     integer(i4b), intent(in) :: first,factor,n
     integer(i4b), dimension(n) :: geop_i
@@ -572,7 +572,7 @@ contains
        end do
     end if
   end function geop_i
- !bl
+  !bl
   function geop_c(first,factor,n)
     complex(sp), intent(in) :: first,factor
     integer(i4b), intent(in) :: n
@@ -599,7 +599,7 @@ contains
        end do
     end if
   end function geop_c
- !bl
+  !bl
   function geop_dv(first,factor,n)
     real(dp), dimension(:), intent(in) :: first,factor
     integer(i4b), intent(in) :: n
@@ -627,8 +627,8 @@ contains
        end do
     end if
   end function geop_dv
- !bl
- !bl
+  !bl
+  !bl
   recursive function cumsum_r(arr,seed) result(ans)
     real(sp), dimension(:), intent(in) :: arr
     real(sp), optional, intent(in) :: seed
@@ -649,7 +649,7 @@ contains
        ans(3:n:2)=ans(2:n-1:2)+arr(3:n:2)
     end if
   end function cumsum_r
- !bl
+  !bl
   recursive function cumsum_i(arr,seed) result(ans)
     integer(i4b), dimension(:), intent(in) :: arr
     integer(i4b), optional, intent(in) :: seed
@@ -669,8 +669,8 @@ contains
        ans(3:n:2)=ans(2:n-1:2)+arr(3:n:2)
     end if
   end function cumsum_i
- !bl
- !bl
+  !bl
+  !bl
   recursive function cumprod(arr,seed) result(ans)
     real(sp), dimension(:), intent(in) :: arr
     real(sp), optional, intent(in) :: seed
@@ -691,8 +691,8 @@ contains
        ans(3:n:2)=ans(2:n-1:2)*arr(3:n:2)
     end if
   end function cumprod
- !bl
- !bl
+  !bl
+  !bl
   function poly_rr(x,coeffs)
     real(sp), intent(in) :: x
     real(sp), dimension(:), intent(in) :: coeffs
@@ -724,7 +724,7 @@ contains
        deallocate(vec)
     end if
   end function poly_rr
- !bl
+  !bl
   function poly_dd(x,coeffs)
     real(dp), intent(in) :: x
     real(dp), dimension(:), intent(in) :: coeffs
@@ -756,7 +756,7 @@ contains
        deallocate(vec)
     end if
   end function poly_dd
- !bl
+  !bl
   function poly_rc(x,coeffs)
     complex(spc), intent(in) :: x
     real(sp), dimension(:), intent(in) :: coeffs
@@ -788,7 +788,7 @@ contains
        deallocate(vec)
     end if
   end function poly_rc
- !bl
+  !bl
   function poly_cc(x,coeffs)
     complex(spc), intent(in) :: x
     complex(spc), dimension(:), intent(in) :: coeffs
@@ -820,7 +820,7 @@ contains
        deallocate(vec)
     end if
   end function poly_cc
- !bl
+  !bl
   function poly_rrv(x,coeffs)
     real(sp), dimension(:), intent(in) :: coeffs,x
     real(sp), dimension(size(x)) :: poly_rrv
@@ -840,7 +840,7 @@ contains
        end do
     end if
   end function poly_rrv
- !bl
+  !bl
   function poly_ddv(x,coeffs)
     real(dp), dimension(:), intent(in) :: coeffs,x
     real(dp), dimension(size(x)) :: poly_ddv
@@ -860,22 +860,22 @@ contains
        end do
     end if
   end function poly_ddv
- !bl
+  !bl
   function poly_msk_rrv(x,coeffs,mask)
     real(sp), dimension(:), intent(in) :: coeffs,x
     logical(lgt), dimension(:), intent(in) :: mask
     real(sp), dimension(size(x)) :: poly_msk_rrv
     poly_msk_rrv=unpack(poly_rrv(pack(x,mask),coeffs),mask,0.0_sp)
   end function poly_msk_rrv
- !bl
+  !bl
   function poly_msk_ddv(x,coeffs,mask)
     real(dp), dimension(:), intent(in) :: coeffs,x
     logical(lgt), dimension(:), intent(in) :: mask
     real(dp), dimension(size(x)) :: poly_msk_ddv
     poly_msk_ddv=unpack(poly_ddv(pack(x,mask),coeffs),mask,0.0_dp)
   end function poly_msk_ddv
- !bl
- !bl
+  !bl
+  !bl
   recursive function poly_term_rr(a,b) result(u)
     real(sp), dimension(:), intent(in) :: a
     real(sp), intent(in) :: b
@@ -893,7 +893,7 @@ contains
        u(3:n:2)=a(3:n:2)+b*u(2:n-1:2)
     end if
   end function poly_term_rr
- !bl
+  !bl
   recursive function poly_term_cc(a,b) result(u)
     complex(spc), dimension(:), intent(in) :: a
     complex(spc), intent(in) :: b
@@ -911,8 +911,8 @@ contains
        u(3:n:2)=a(3:n:2)+b*u(2:n-1:2)
     end if
   end function poly_term_cc
- !bl
- !bl
+  !bl
+  !bl
   function zroots_unity(n,nn)
     integer(i4b), intent(in) :: n,nn
     complex(spc), dimension(nn) :: zroots_unity
@@ -929,63 +929,63 @@ contains
        k=2*k
     end do
   end function zroots_unity
- !bl
+  !bl
   function outerprod_r(a,b)
     real(sp), dimension(:), intent(in) :: a,b
     real(sp), dimension(size(a),size(b)) :: outerprod_r
     outerprod_r = spread(a,dim=2,ncopies=size(b)) * &
          spread(b,dim=1,ncopies=size(a))
   end function outerprod_r
- !bl
+  !bl
   function outerprod_d(a,b)
     real(dp), dimension(:), intent(in) :: a,b
     real(dp), dimension(size(a),size(b)) :: outerprod_d
     outerprod_d = spread(a,dim=2,ncopies=size(b)) * &
          spread(b,dim=1,ncopies=size(a))
   end function outerprod_d
- !bl
+  !bl
   function outerdiv(a,b)
     real(sp), dimension(:), intent(in) :: a,b
     real(sp), dimension(size(a),size(b)) :: outerdiv
     outerdiv = spread(a,dim=2,ncopies=size(b)) / &
          spread(b,dim=1,ncopies=size(a))
   end function outerdiv
- !bl
+  !bl
   function outersum(a,b)
     real(sp), dimension(:), intent(in) :: a,b
     real(sp), dimension(size(a),size(b)) :: outersum
     outersum = spread(a,dim=2,ncopies=size(b)) + &
          spread(b,dim=1,ncopies=size(a))
   end function outersum
- !bl
+  !bl
   function outerdiff_r(a,b)
     real(sp), dimension(:), intent(in) :: a,b
     real(sp), dimension(size(a),size(b)) :: outerdiff_r
     outerdiff_r = spread(a,dim=2,ncopies=size(b)) - &
          spread(b,dim=1,ncopies=size(a))
   end function outerdiff_r
- !bl
+  !bl
   function outerdiff_d(a,b)
     real(dp), dimension(:), intent(in) :: a,b
     real(dp), dimension(size(a),size(b)) :: outerdiff_d
     outerdiff_d = spread(a,dim=2,ncopies=size(b)) - &
          spread(b,dim=1,ncopies=size(a))
   end function outerdiff_d
- !bl
+  !bl
   function outerdiff_i(a,b)
     integer(i4b), dimension(:), intent(in) :: a,b
     integer(i4b), dimension(size(a),size(b)) :: outerdiff_i
     outerdiff_i = spread(a,dim=2,ncopies=size(b)) - &
          spread(b,dim=1,ncopies=size(a))
   end function outerdiff_i
- !bl
+  !bl
   function outerand(a,b)
     logical(lgt), dimension(:), intent(in) :: a,b
     logical(lgt), dimension(size(a),size(b)) :: outerand
     outerand = spread(a,dim=2,ncopies=size(b)) .and. &
          spread(b,dim=1,ncopies=size(a))
   end function outerand
- !bl
+  !bl
   subroutine scatter_add_r(dest,source,dest_index)
     real(sp), dimension(:), intent(out) :: dest
     real(sp), dimension(:), intent(in) :: source
@@ -1034,7 +1034,7 @@ contains
        if (i > 0 .and. i <= m) dest(i)=max(dest(i),source(j))
     end do
   end subroutine scatter_max_d
- !bl
+  !bl
   subroutine diagadd_rv(mat,diag)
     real(sp), dimension(:,:), intent(inout) :: mat
     real(sp), dimension(:), intent(in) :: diag
@@ -1044,7 +1044,7 @@ contains
        mat(j,j)=mat(j,j)+diag(j)
     end do
   end subroutine diagadd_rv
- !bl
+  !bl
   subroutine diagadd_r(mat,diag)
     real(sp), dimension(:,:), intent(inout) :: mat
     real(sp), intent(in) :: diag
@@ -1054,7 +1054,7 @@ contains
        mat(j,j)=mat(j,j)+diag
     end do
   end subroutine diagadd_r
- !bl
+  !bl
   subroutine diagmult_rv(mat,diag)
     real(sp), dimension(:,:), intent(inout) :: mat
     real(sp), dimension(:), intent(in) :: diag
@@ -1064,7 +1064,7 @@ contains
        mat(j,j)=mat(j,j)*diag(j)
     end do
   end subroutine diagmult_rv
- !bl
+  !bl
   subroutine diagmult_r(mat,diag)
     real(sp), dimension(:,:), intent(inout) :: mat
     real(sp), intent(in) :: diag
@@ -1074,7 +1074,7 @@ contains
        mat(j,j)=mat(j,j)*diag
     end do
   end subroutine diagmult_r
- !bl
+  !bl
   function get_diag_rv(mat)
     real(sp), dimension(:,:), intent(in) :: mat
     real(sp), dimension(size(mat,1)) :: get_diag_rv
@@ -1084,7 +1084,7 @@ contains
        get_diag_rv(j)=mat(j,j)
     end do
   end function get_diag_rv
- !bl
+  !bl
   function get_diag_dv(mat)
     real(dp), dimension(:,:), intent(in) :: mat
     real(dp), dimension(size(mat,1)) :: get_diag_dv
@@ -1094,7 +1094,7 @@ contains
        get_diag_dv(j)=mat(j,j)
     end do
   end function get_diag_dv
- !bl
+  !bl
   subroutine put_diag_rv(diagv,mat)
     real(sp), dimension(:), intent(in) :: diagv
     real(sp), dimension(:,:), intent(inout) :: mat
@@ -1104,7 +1104,7 @@ contains
        mat(j,j)=diagv(j)
     end do
   end subroutine put_diag_rv
- !bl
+  !bl
   subroutine put_diag_r(scal,mat)
     real(sp), intent(in) :: scal
     real(sp), dimension(:,:), intent(inout) :: mat
@@ -1114,7 +1114,7 @@ contains
        mat(j,j)=scal
     end do
   end subroutine put_diag_r
- !bl
+  !bl
   subroutine unit_matrix(mat)
     real(sp), dimension(:,:), intent(out) :: mat
     integer(i4b) :: i,n
@@ -1124,7 +1124,7 @@ contains
        mat(i,i)=1.0_sp
     end do
   end subroutine unit_matrix
- !bl
+  !bl
   function upper_triangle(j,k,extra)
     integer(i4b), intent(in) :: j,k
     integer(i4b), optional, intent(in) :: extra
@@ -1134,7 +1134,7 @@ contains
     if (present(extra)) n=extra
     upper_triangle=(outerdiff(arth_i(1,1,j),arth_i(1,1,k)) < n)
   end function upper_triangle
- !bl
+  !bl
   function lower_triangle(j,k,extra)
     integer(i4b), intent(in) :: j,k
     integer(i4b), optional, intent(in) :: extra
@@ -1144,11 +1144,11 @@ contains
     if (present(extra)) n=extra
     lower_triangle=(outerdiff(arth_i(1,1,j),arth_i(1,1,k)) > -n)
   end function lower_triangle
- !bl
+  !bl
   function vabs(v)
     real(sp), dimension(:), intent(in) :: v
     real(sp) :: vabs
     vabs=sqrt(dot_product(v,v))
   end function vabs
- !bl
+  !bl
 end module nrutil
