@@ -1,16 +1,19 @@
 module Functions
-  use Const, only:DOUBLE, SINGLE, IM
+  use Const, only:DOUBLE, SINGLE, IM, transE
   implicit none
   private
   public::sigma, shapefunc, CheckDelete
 
 contains
 
-  function sigma(E, paras)
-    real(DOUBLE), intent(in) :: E
-    real(DOUBLE), dimension(7), intent(in) :: paras
+  function sigma(Ein, paras)! sigma0, E0, yw, ya, P, y0, y1)
+    real(DOUBLE), intent(in) :: Ein!, sigma0, E0, yw, ya, P, y0, y1
+    real(DOUBLE), dimension(7), intent(in) :: paras!, sigma0, E0, yw, ya, P, y0, y1
     real(DOUBLE) :: sigma, E0, sigma0,  ya, P, yw, y0, y1
+    real(DOUBLE) :: E
     real(DOUBLE) :: x, y, F
+
+    E = Ein*transE
     E0 = paras(1)
     sigma0 = paras(2)
     ya = paras(3)

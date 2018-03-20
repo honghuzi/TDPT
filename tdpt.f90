@@ -13,13 +13,13 @@ program main
   real(DOUBLE) :: E1, E2, Ea, Eb, Ei, Ef
   complex(DOUBLE) :: Ka, Kb
   complex(DOUBLE), dimension(:), allocatable :: Kas, Kbs
-  integer(SINGLE), parameter :: nE = 200
+  integer(SINGLE), parameter :: nE = 150
   real(DOUBLE) :: dE, Eg, sigmas(4)
   real(DOUBLE), dimension(nE) :: energy, ss(nE)
   complex(DOUBLE), dimension(nE) :: KK
   real(DOUBLE), dimension(nE, nE) :: spectrum
   real(DOUBLE), dimension(nE*nE) :: Ex, Ey
-  type(cos2field) :: f1, f2
+  type(cos2field) :: f1, f2, f3
   integer(SINGLE) :: iE1, iE2, i, j
   character(10) nowtime
 
@@ -37,31 +37,30 @@ program main
   ! read (unit=100, nml=He)
   ! close (100)
 
-  omega = 42d0/transE
-  ! tau = 3*2*PI/omega
-  tau = 4d-15/2.4189d-17
-  f1 = cos2field(ItoE0(1d15), omega, 3*PI/2, tau, tau/2 + 0d0)
-  f2 = cos2field(ItoE0(0d15), omega, 3*PI/2, tau, tau/2 + 10d0)
-  ! f1 = cos2field(ItoE0(1.0d15), 1.86, 0.0, 500.0, 500.0)
-  ! f2 = cos2field(ItoE0(1.0d15)/2, 1.92, 0.0, 500.0, 500.0)
+  ! omega = 53d0/transE
+  ! ! tau = 3*2*PI/omega
+  tau = 5d-15/2.4189d-17
+  f1 = cos2field(ItoE0(1.0d15), 1.86, 0.0, tau, tau/2.0)
+  f2 = cos2field(ItoE0(1.0d15), 1.92, 0.0, tau, tau/2.0)
+  f3 = cos2field(ItoE0(0.0d15)/30.0, 0.10, 0.0, 4*tau, 2*tau)
   dt = 0.05
-  nt = int((max(f1%tau + f1%tm, f2%tau + f2%tm)+0d0)/dt)
+  nt = int((max(f1%tau/2 + f1%tm, f2%tau/2 + f2%tm, f3%tau/2 + f3%tm)+0*tau)/dt)
 
   allocate (t(nt), ele(nt))
   allocate (Kas(nt-1), Kbs(nt-1))
   forall (i=1:nt) t(i) = i*dt
   do i = 1, nt
-     ele(i) = GetEle(f1, t(i)) + GetEle(f2, t(i))
+     ele(i) = GetEle(f1, t(i)) + GetEle(f2, t(i)) + GetEle(f3, t(i))
   end do
 
   open (100, file='data/ele.bin', access='stream')
   write (100) (t(i), ele(i), i=1, nt)
   close (100)
 
-  dE = 27.2d0/nE/transE
-  ! dE = 2d0/nE
-  energy = [1:nE]*dE
-  ! energy = [-nE/2:nE/2 - 1]*dE
+  ! dE = 27.2d0/nE/transE
+  dE = 3d0/nE
+  ! energy = [1:nE]*dE
+  energy = [-nE/2:nE/2 - 1]*dE
   Ei = -79.0 / transE
   Eg = -54.4 / transE
   call time(nowtime)
@@ -84,19 +83,10 @@ program main
         Ea = E1 + Eg
         Eb = E2 + Eg
         Ef = E1 + E2
-        ! Ka = shapefunc(Ea, Ei, Ef, t, ele, dt)
-        ! Kb = shapefunc(Eb, Ei, Ef, t, ele, dt)
 
-        ! call quad2d_qromb(t(1), t(nt), Ka, Ea-Ei, Ef-Ea, f1, f2)  ! energy in a. u.
-        ! call quad2d_qromb(t(1), t(nt), Kb, Eb-Ei, Ef-Eb, f1, f2)
+        call quad2d_qromb(t(1), t(nt), Ka, Ea-Ei, Ef-Ea, f1, f2, f3)  ! energy in a. u.
+        call quad2d_qromb(t(1), t(nt), Kb, Eb-Ei, Ef-Eb, f1, f2, f3)
 
-
-        do i = 1, nt-1
-           call quad2d_qgaus(t(i), t(i+1), Kas(i), Ea-Ei, Ef-Ea, f1, f2)
-           call quad2d_qgaus(t(i), t(i+1), Kbs(i), Eb-Ei, Ef-Eb, f1, f2)
-        end do
-        Ka = sum(Kas)
-        Kb = sum(Kbs)
 
         ! Ka = Ka*(1+exp(IM*(E1+E2-Ei)*10.0-2*PI))
         ! Kb = Kb*(1+exp(IM*(E1+E2-Ei)*10.0-2*PI))
@@ -105,56 +95,55 @@ program main
         sigmas(3) = sigma(Eb - Ei, paras1)
         sigmas(4) = sigma(Ef - Eb, paras2)
 
-        ! spectrum(iE1, iE2) = abs(energy(iE1)*energy(iE2))*abs(sqrt(sigmas(1)*sigmas(2)/(Ea - Ei)/(Ef - Ea))*Ka &
-        !      + sqrt(sigmas(3)*sigmas(4)/(Eb - Ei)/(Ef - Eb))*Kb)**2
-
-        spectrum(iE1, iE2) = abs(sqrt(sigmas(1)*sigmas(2)/(Ea - Ei)/(Ef - Ea))*Ka &
+        spectrum(iE1, iE2) = abs(energy(iE1)*energy(iE2))*abs(sqrt(sigmas(1)*sigmas(2)/(Ea - Ei)/(Ef - Ea))*Ka &
              + sqrt(sigmas(3)*sigmas(4)/(Eb - Ei)/(Ef - Eb))*Kb)**2
 
+        ! spectrum(iE1, iE2) = abs(sqrt(sigmas(1)*sigmas(2)/(Ea - Ei)/(Ef - Ea))*Ka &
+        ! + sqrt(sigmas(3)*sigmas(4)/(Eb - Ei)/(Ef - Eb))*Kb)**2
+
         spectrum(iE2, iE1) = spectrum(iE1, iE2)
-        ! Ex(nE*(iE2 - 1) + iE1) = (iE1 - nE/2)*dE
-        ! Ey(nE*(iE1 - 1) + iE2) = (iE2 - nE/2)*dE
-        ! Ex(nE*(iE1 - 1) + iE2) = (iE2 - nE/2)*dE
-        ! Ey(nE*(iE2 - 1) + iE1) = (iE1 - nE/2)*dE
-        Ex(nE*(iE2 - 1) + iE1) = iE1*dE
-        Ey(nE*(iE1 - 1) + iE2) = iE2*dE
-        Ex(nE*(iE1 - 1) + iE2) = iE2*dE
-        Ey(nE*(iE2 - 1) + iE1) = iE1*dE
+        Ex(nE*(iE2 - 1) + iE1) = (iE1 - nE/2)*dE
+        Ey(nE*(iE1 - 1) + iE2) = (iE2 - nE/2)*dE
+        Ex(nE*(iE1 - 1) + iE2) = (iE2 - nE/2)*dE
+        Ey(nE*(iE2 - 1) + iE1) = (iE1 - nE/2)*dE
+        ! Ex(nE*(iE2 - 1) + iE1) = iE1*dE
+        ! Ey(nE*(iE1 - 1) + iE2) = iE2*dE
+        ! Ex(nE*(iE1 - 1) + iE2) = iE2*dE
+        ! Ey(nE*(iE2 - 1) + iE1) = iE1*dE
      end do
 
      if (mod(iE2, 20) == 0) then
-        print *, "iE2=", iE2
+     print *, "iE2=", iE2
      end if
   end do
-  Ex = Ex * transE
-  Ey = Ey * transE
+  ! Ex = Ex * transE
+  ! Ey = Ey * transE
 
   open (100, file='data/je.bin', access='stream')
   write (100) ((Ex(nE*(j - 1) + i), Ey(nE*(i - 1) + j), spectrum(i, j), i=1, nE), j=1, nE)
   close (100)
-
   call time(nowtime)
   print'("time is:", T20, A)', nowtime
   deallocate (t, ele)
   call system('cd fig & gnuplot ele.gp & gnuplot je.gp & gnuplot sigma.gp')
 end program main
 
-function shapefun(x, y, w1, w2, f1, f2)  !!! w1, w2 in atomic unit
+function shapefun(x, y, w1, w2, f1, f2, f3)  !!! w1, w2 in atomic unit
   use Const
   use Laser
   implicit none
   real(DOUBLE), intent(in) :: x, w1, w2
-  type(cos2field) :: f1, f2
+  type(cos2field) :: f1, f2, f3
   real(DOUBLE) :: Ex
   real(DOUBLE), dimension(:), intent(in) :: y
   real(DOUBLE), dimension(size(y)) :: Ey
   complex(DOUBLE), dimension(size(y)) :: shapefun
   integer(SINGLE) :: i
 
-  Ex = GetEle(f1, x) + GetEle(f2, x)
+  Ex = GetEle(f1, x) + GetEle(f2, x) + GetEle(f3, x)
 
   do i = 1, size(y)
-     Ey(i) = GetEle(f1, y(i)) + GetEle(f2, y(i))
+     Ey(i) = GetEle(f1, y(i)) + GetEle(f2, y(i)) + GetEle(f3, y(i))
   end do
   shapefun = Ex*Ey*exp(IM*(w1*x + w2*y))
 end function shapefun
